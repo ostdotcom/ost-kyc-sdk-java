@@ -3,6 +3,7 @@ package com.ost.kyc.services.v2;
 import com.google.gson.JsonObject;
 import com.ost.kyc.services.OSTKYCAPIService;
 import com.ost.kyc.services.ServiceTestBase;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -11,6 +12,8 @@ import org.junit.runners.MethodSorters;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static junit.framework.TestCase.fail;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserTest extends ServiceTestBase {
@@ -113,6 +116,7 @@ public class UserTest extends ServiceTestBase {
 
         } catch (IOException e) {
             e.printStackTrace();
+            fail("Fail Create User Test");
         }
 
     }
