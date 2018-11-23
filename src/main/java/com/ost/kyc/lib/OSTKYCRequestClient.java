@@ -120,7 +120,7 @@ public class OSTKYCRequestClient {
         // Start Building the request, url of request and request form body.
         Request.Builder requestBuilder = new Request.Builder();
         HttpUrl baseUrl = HttpUrl.parse(apiEndpoint + resource);
-        HttpUrl.Builder urlBuilder = baseUrl.newBuilder(resource);
+        HttpUrl.Builder urlBuilder = baseUrl != null ? baseUrl.newBuilder(resource) : null;
 
         FormBody.Builder formBodyBuilder = new FormBody.Builder();
         if (null == urlBuilder) {
