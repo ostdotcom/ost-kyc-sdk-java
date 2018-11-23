@@ -132,10 +132,12 @@ public class OSTKYCRequestClient {
 
         // Start Building HMAC Input Buffer by parsing the url.
         Buffer hmacInputBuffer = new Buffer();
-        for (String path : url.pathSegments()) {
-            if (DEBUG && VERBOSE) System.out.println("path:" + path);
-            hmacInputBuffer.writeByte('/').writeUtf8(PathSegmentEscaper.escape(path));
-        }
+//        for (String path : url.pathSegments()) {
+//            if (DEBUG && VERBOSE) System.out.println("path:" + path);
+//            hmacInputBuffer.writeByte('/').writeUtf8(PathSegmentEscaper.escape(path));
+//        }
+
+        hmacInputBuffer.writeUtf8(resource);
         hmacInputBuffer.writeByte('?');
 
         //Reset urlBuilder.
