@@ -85,7 +85,7 @@ public class UserTest extends ServiceTestBase {
     public void get() {
 
         HashMap <String,Object> params = getParams();
-        params.put("id", "11007");
+        params.put("id", "11300");
 
         JsonObject response;
         // Test-Case: Get User by id.
