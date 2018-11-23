@@ -18,7 +18,6 @@ import java.util.concurrent.TimeUnit;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-
 public class OSTKYCRequestClient {
     private String apiKey;
     private String apiSecret;
@@ -29,9 +28,8 @@ public class OSTKYCRequestClient {
     private static final Escaper PathSegmentEscaper = UrlEscapers.urlPathSegmentEscaper();
     private static final String HMAC_SHA256 = "HmacSHA256";
     private static final Charset UTF_8 = Charset.forName("UTF-8");
-//    private static Boolean DEBUG = ("true").equalsIgnoreCase( System.getenv("OST_KYC_SDK_DEBUG") );
-    private static Boolean DEBUG = true;
-    private static Boolean VERBOSE = true;
+    private static Boolean DEBUG = ("true").equalsIgnoreCase( System.getenv("OST_KYC_SDK_DEBUG") );
+    private static Boolean VERBOSE = false;
 
     static class HttpParam {
         private String paramName;
@@ -122,7 +120,7 @@ public class OSTKYCRequestClient {
         // Start Building the request, url of request and request form body.
         Request.Builder requestBuilder = new Request.Builder();
         HttpUrl baseUrl = HttpUrl.parse(apiEndpoint + resource);
-        HttpUrl.Builder urlBuilder = baseUrl != null ? baseUrl.newBuilder(resource) : null;
+        HttpUrl.Builder urlBuilder = baseUrl.newBuilder(resource);
 
         FormBody.Builder formBodyBuilder = new FormBody.Builder();
         if (null == urlBuilder) {
@@ -199,7 +197,7 @@ public class OSTKYCRequestClient {
         // Build the request Object.
         Request request;
         if (GET_REQUEST.equalsIgnoreCase(requestType)) {
-            requestBuilder.get();
+            requestBuilder.get().addHeader("content-type", "x-www-form-urlencoded");
         } else {
             FormBody formBody = formBodyBuilder.build();
             if (DEBUG && VERBOSE) {
@@ -253,7 +251,7 @@ public class OSTKYCRequestClient {
             try {
                 responseBody = response.body().string();
                 if (responseBody.length() > 0) {
-                    if (DEBUG) System.out.println("responseBody:\n" + responseBody + "\n");
+                    if (DEBUG) System.out.println("responseCode: "+response.code()+"\nresponseBody:\n" + responseBody + "\n");
                     return responseBody;
                 }
             } catch (IOException e) {
@@ -264,12 +262,6 @@ public class OSTKYCRequestClient {
 
         // Response does not have a body. Lets create one.
         switch (response.code()) {
-            case 400:
-                responseBody = "{'success': false, 'err': {'code': 'BAD_REQUEST', 'internal_id': 'SDK(BAD_REQUEST)', 'msg': '', 'error_data':[]}}";
-                break;
-            case 429:
-                responseBody = "{'success': false, 'err': {'code': 'TOO_MANY_REQUESTS', 'internal_id': 'SDK(TOO_MANY_REQUESTS)', 'msg': '', 'error_data':[]}}";
-                break;
             case 502:
                 responseBody = "{'success': false, 'err': {'code': 'BAD_GATEWAY', 'internal_id': 'SDK(BAD_GATEWAY)', 'msg': '', 'error_data':[]}}";
                 break;

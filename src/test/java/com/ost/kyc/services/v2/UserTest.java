@@ -84,15 +84,11 @@ public class UserTest extends ServiceTestBase {
         HashMap <String,Object> params = getParams();
         params.put("id", "11007");
 
-        String resultType = "user";
         JsonObject response;
-        Boolean isArrayResultType = false;
         // Test-Case: Get User by id.
         try {
             response = getService().get( params );
-            validateResponseWithSuccess( response, resultType, isArrayResultType );
-
-            JsonObject results = response.get("data").getAsJsonObject();
+            validateResponseWithSuccess( response);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,18 +103,13 @@ public class UserTest extends ServiceTestBase {
 
         HashMap <String,Object> params = getParams();
         // make unique email using timestamp
-
         params.put("email", "email+" +(System.currentTimeMillis() / 1000) + "@domain.co");
 
-        String resultType = "user";
         JsonObject response;
-        Boolean isArrayResultType = false;
         // Test-Case: Create a new User.
         try {
             response = getService().create( params );
-            validateResponseWithSuccess( response, resultType, isArrayResultType );
-
-            JsonObject results = response.get("data").getAsJsonObject();
+            validateResponseWithSuccess( response);
 
         } catch (IOException e) {
             e.printStackTrace();

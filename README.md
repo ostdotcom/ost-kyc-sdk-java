@@ -13,7 +13,7 @@ To use this node module, developers will need to:
 
 ## Documentation
 
-[https://dev.ost.com/docs/kyc/index.html/](https://dev.ost.com/docs/kyc/index.html/)
+[https://dev.ost.com/docs/kyc/index.html](https://dev.ost.com/docs/kyc/index.html)
 
 ## Installation
 
@@ -54,9 +54,9 @@ The jar file can be found in the target folder.
 Initialize the SDK object:
 
 ```java
-// the latest valid API endpoint is "https://sandboxapi.ost.com/v1.1/", this may change in the future
+// the latest valid API endpoint is "https://kyc.sandboxost.com", this may change in the future
 HashMap <String,Object> sdkConfig = new HashMap<String,Object>();
-sdkConfig.put("apiEndpoint","[V1_API_ENDPOINT]");
+sdkConfig.put("apiEndpoint","[API_ENDPOINT]");
 sdkConfig.put("apiKey","[YOUR_API_KEY]");
 sdkConfig.put("apiSecret","[YOUR_API_SECRET]");
 OSTSDK ostObj = new OSTSDK(sdkConfig);
