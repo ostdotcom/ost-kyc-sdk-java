@@ -1,6 +1,7 @@
 package com.ost.kyc.lib;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.*;
 
 import com.google.gson.Gson;
@@ -22,10 +23,10 @@ public class OSTKYCRequestClient {
     private String apiKey;
     private String apiSecret;
     private String apiEndpoint;
+    private Long timeout;
     private static final Gson gson = new Gson();
     private OkHttpClient client;
     private static final Escaper FormParameterEscaper = UrlEscapers.urlFormParameterEscaper();
-    private static final Escaper PathSegmentEscaper = UrlEscapers.urlPathSegmentEscaper();
     private static final String HMAC_SHA256 = "HmacSHA256";
     private static final Charset UTF_8 = Charset.forName("UTF-8");
     private static Boolean DEBUG = ("true").equalsIgnoreCase( System.getenv("OST_KYC_SDK_DEBUG") );
@@ -67,6 +68,17 @@ public class OSTKYCRequestClient {
         Object apiSecret = params.get("apiSecret");
         Object apiEndpoint = params.get("apiEndpoint");
 
+        //default timeout is 10 seconds for socket connection
+        long timeout = (long) 10;
+        if(params.containsKey("config"))
+        {
+            HashMap<String, Object> config = (HashMap<String, Object>) params.get("config");
+
+            if(config.containsKey("timeout")){
+                timeout = (Long) config.get("timeout");
+            }
+        }
+
         if (!(apiKey instanceof String)) {
             throw new IllegalArgumentException("Api key not present.");
         }
@@ -82,6 +94,8 @@ public class OSTKYCRequestClient {
         this.apiKey = (String) apiKey;
         this.apiSecret = (String) apiSecret;
         this.apiEndpoint = (String) apiEndpoint;
+        this.timeout = timeout;
+
 
         //To-Do: Discuss Dispatcher config with Team.
         Dispatcher dispatcher = new Dispatcher();
@@ -91,6 +105,7 @@ public class OSTKYCRequestClient {
         client = new OkHttpClient.Builder()
                 .connectionPool(new ConnectionPool(10, 2, TimeUnit.MINUTES))
                 .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(timeout, TimeUnit.SECONDS)
                 .dispatcher(dispatcher)
                 .retryOnConnectionFailure(false)
                 .build();
@@ -99,6 +114,8 @@ public class OSTKYCRequestClient {
 
     private static String GET_REQUEST = "GET";
     private static String POST_REQUEST = "POST";
+    private static String SocketTimeoutExceptionString = "{'success':'false','err':{'code':'GATEWAY_TIMEOUT','internal_id':'TIMEOUT_ERROR','msg':'','error_data':[]}}";
+
 
     public JsonObject get(String resource, Map<String, Object> queryParams) throws IOException {
         return send(GET_REQUEST, resource, queryParams);
@@ -213,10 +230,16 @@ public class OSTKYCRequestClient {
         request = requestBuilder.build();
 
         // Make the call and execute.
+        String responseBody;
         Call call = client.newCall(request);
-        okhttp3.Response response = call.execute();
-        String responseBody = getResponseBodyAsString(response);
-
+        try {
+            okhttp3.Response response = call.execute();
+            responseBody = getResponseBodyAsString(response);
+        }catch (SocketTimeoutException e)
+        {
+            System.out.println("SocketTimeoutException occured");
+            responseBody =  SocketTimeoutExceptionString;
+        }
         return buildApiResponse(responseBody);
     }
 

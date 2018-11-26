@@ -2,7 +2,7 @@
 The official [OST KYC JAVA SDK](https://dev.ost.com/docs/kyc/index.html).
 
 
-[![Travis](https://travis-ci.org/OpenSTFoundation/ostkyc-sdk-java.svg?branch=master)](https://travis-ci.org/OpenSTFoundation/kyc-sdk-java)
+[![Travis](https://travis-ci.org/OpenSTFoundation/ost-kyc-sdk-java.svg?branch=master)](https://travis-ci.org/OpenSTFoundation/ost-kyc-sdk-java)
 [![Gitter: JOIN CHAT](https://img.shields.io/badge/gitter-JOIN%20CHAT-brightgreen.svg)](https://gitter.im/OpenSTFoundation/SimpleToken)
 
 ## Requirements
@@ -22,8 +22,8 @@ To use this node module, developers will need to:
 ```xml
 <dependency>
 <groupId>com.ost.kyc</groupId>
-<artifactId>kyc-sdk-java</artifactId>
-<version>2.0</version>
+<artifactId>ost-kyc-sdk-java</artifactId>
+<version>2.0.0</version>
 </dependency>
 ```
 
@@ -31,8 +31,8 @@ To use this node module, developers will need to:
 
 Clone the repository
 ```bash
-git clone https://github.com/OpenSTFoundation/kyc-sdk-java.git
-cd kyc-sdk-java
+git clone https://github.com/OpenSTFoundation/ost-kyc-sdk-java.git
+cd ost-kyc-sdk-java
 ```
 
 
@@ -59,6 +59,15 @@ HashMap <String,Object> sdkConfig = new HashMap<String,Object>();
 sdkConfig.put("apiEndpoint","[API_ENDPOINT]");
 sdkConfig.put("apiKey","[YOUR_API_KEY]");
 sdkConfig.put("apiSecret","[YOUR_API_SECRET]");
+
+
+// The config field is optional for sdkConfig Object
+HashMap <String,Object> nestedparam = new HashMap<String,Object>();
+// This is the timeout in seconds for which the socket connection will remain open
+nestedparam.put("timeout", (long) 15);
+sdkConfig.put("config", nestedparam);
+
+
 OSTSDK ostObj = new OSTSDK(sdkConfig);
 services = (Manifest) ostObj.services;
 ```
@@ -66,7 +75,7 @@ services = (Manifest) ostObj.services;
 ### Users Module
 
 ```java
-User user = services.user;
+com.ost.kyc.services.v2.User userService = services.user;
 ```
 
 Create a new user:
@@ -74,7 +83,7 @@ Create a new user:
 ```java
 HashMap <String, Object> params = new HashMap<String, Object>();
 params.put("email", "email@domain.com");
-JsonObject response = user.create( params );
+JsonObject response = userService.create( params );
 System.out.println("response: " + response.toString() );
 ```
 
@@ -83,7 +92,7 @@ Get an existing user:
 ```java
 HashMap <String,Object> params = new HashMap<String,Object>();
 params.put("id", "11007");
-JsonObject response = user.get( params );
+JsonObject response = userService.get( params );
 System.out.println("response: " + response.toString() );
 ```
 
@@ -91,14 +100,14 @@ Get a list of existing users and other data:
 
 ```java
 HashMap <String,Object> params = new HashMap<String,Object>();
-JsonObject response = user.list( params );
+JsonObject response = userService.list( params );
 System.out.println("response: " + response.toString() );
 ```
 
 ### UsersKyc Module
 
 ```java
-UsersKyc usersKyc = services.usersKyc;
+com.ost.kyc.services.v2.UsersKyc usersKycService = services.usersKyc;
 ```
 
 Get an existing user kyc:
@@ -106,7 +115,7 @@ Get an existing user kyc:
 ```java
 HashMap <String,Object> params = new HashMap<String,Object>();
 params.put("user_id", "11007");
-JsonObject response = usersKyc.get( params );
+JsonObject response = usersKycService.get( params );
 System.out.println("response: " + response.toString() );
 ```
 
@@ -129,7 +138,7 @@ params.put("city", "pune");
 params.put("nationality", "INDIAN");
 params.put("state", "maharashtra");
 params.put("postal_code", "411028");
-JsonObject response = usersKyc.submit_kyc( params );
+JsonObject response = usersKycService.submit_kyc( params );
 System.out.println("response: " + response.toString() );
 ```
 
@@ -137,7 +146,7 @@ Get a list of existing users kyc and other data:
 
 ```java
 HashMap <String,Object> params = new HashMap<String,Object>();
-JsonObject response = usersKyc.list( params );
+JsonObject response = usersKycService.list( params );
 System.out.println("response: " + response.toString() );
 ```
 
@@ -148,7 +157,7 @@ HashMap <String, Object> params = new HashMap<String, Object>();
 HashMap <String, String> nestedparams = new HashMap<String, String>();
 nestedparams.put("selfie", "image/jpeg");
 params.put("files", nestedparams);
-JsonObject response = usersKyc.get_presigned_url_post( params );
+JsonObject response = usersKycService.get_presigned_url_post( params );
 System.out.println("response: " + response.toString() );
 ```
 
@@ -159,7 +168,7 @@ HashMap <String, Object> params = new HashMap<String, Object>();
 HashMap <String, String> nestedparams = new HashMap<String, String>();
 nestedparams.put("selfie", "image/jpeg");
 params.put("files", nestedparams);
-JsonObject response = usersKyc.get_presigned_url_put( params );
+JsonObject response = usersKycService.get_presigned_url_put( params );
 System.out.println("response: " + response.toString() );
 ```
 
@@ -167,7 +176,7 @@ System.out.println("response: " + response.toString() );
 ### UsersKycDetail Module
 
 ```java
-UsersKycDetail usersKycDetail = services.usersKycDetail;
+com.ost.kyc.services.v2.UsersKycDetail usersKycDetailService = services.usersKycDetail;
 ```
 
 Get an user kyc detail:
@@ -175,14 +184,14 @@ Get an user kyc detail:
 ```java
 HashMap <String, Object> params = new HashMap<String, Object>();
 params.put("user_id", "11052");
-JsonObject response = usersKycDetail.get( params );
+JsonObject response = usersKycDetailService.get( params );
 System.out.println("response: " + response.toString() );
 ```
 
 ### Validators Module
 
 ```java
-Validators validators = services.validators;
+com.ost.kyc.services.v2.Validators validatorService = services.validators;
 ```
 
 Verify Ethereum Address:
@@ -190,7 +199,7 @@ Verify Ethereum Address:
 ```java
 HashMap <String, Object> params = new HashMap<String, Object>();
 params.put("ethereum_address", "0x7f2ED21D1702057C7d9f163cB7e5458FA2B6B7c4");
-JsonObject response = validators.verify_ethereum_address( params );
+JsonObject response = validatorService.verify_ethereum_address( params );
 System.out.println("response: " + response.toString() );
 ```
 

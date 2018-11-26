@@ -13,6 +13,11 @@ public abstract class ServiceTestBase {
     protected OSTKYCServiceManifest services;
     private OSTKYCAPIService service;
 
+    // Please set following environment variables for running all the test cases successfully
+    // 1. OST_KYC_API_KEY
+    // 2. OST_KYC_API_SECRET
+    // 3. OST_KYC_API_ENDPOINT
+    // 4. USER_ID
     public void setUp() throws Exception {
 
         String apiKey = System.getenv("OST_KYC_API_KEY");
@@ -47,6 +52,17 @@ public abstract class ServiceTestBase {
         // Validate Success Flag.
         boolean success = response.get("success").getAsBoolean();
         Assert.assertEquals( success, true);
+
+    }
+
+    protected static void validateResponseWithFaliure(JsonObject response) {
+
+        // Validate presence of success key in response.
+        Assert.assertEquals( "success key missing in response.", true, response.has("success") );
+
+        // Validate Success Flag.
+        boolean success = response.get("success").getAsBoolean();
+        Assert.assertEquals( success, false);
 
     }
 

@@ -19,7 +19,7 @@ public class OSTKYCSDKTest {
 
         String apiKey = System.getenv("OST_KYC_API_KEY");
         if ( null == apiKey ) {
-            throw new Exception("Environment Variable OST_KYC_API_KEY is not set.");
+            throw new Exception("Environment Variable OST_KYC_API_KEY is not set");
         }
 
         String apiSecret = System.getenv("OST_KYC_API_SECRET");
