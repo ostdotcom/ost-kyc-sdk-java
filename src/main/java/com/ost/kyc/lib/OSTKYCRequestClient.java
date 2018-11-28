@@ -344,7 +344,12 @@ public class OSTKYCRequestClient {
                 params = buildNestedQuery(params, prefix, value);
             }
         } else {
-            params.add(new HttpParam(paramKeyPrefix, paramValObj.toString()));
+            if(paramValObj != null){
+                params.add(new HttpParam(paramKeyPrefix, paramValObj.toString()));
+            }else{
+                params.add(new HttpParam(paramKeyPrefix, ""));
+            }
+
         }
         return params;
     }
