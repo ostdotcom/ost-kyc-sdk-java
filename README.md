@@ -6,7 +6,7 @@ The official [OST KYC JAVA SDK](https://dev.ost.com/docs/kyc/index.html).
 [![Gitter: JOIN CHAT](https://img.shields.io/badge/gitter-JOIN%20CHAT-brightgreen.svg)](https://gitter.im/OpenSTFoundation/SimpleToken)
 
 ## Requirements
-
+// Test
 To use this node module, developers will need to:
 1. Login on [https://kyc.ost.com/admin/login](https://kyc.ost.com/admin/login).
 2. Obtain an API Key and API Secret from [https://kyc.ost.com/admin/settings/developer-integrations](https://kyc.ost.com/admin/settings/developer-integrations).
