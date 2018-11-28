@@ -60,6 +60,7 @@ sdkConfig.put("apiEndpoint","[API_ENDPOINT]");
 sdkConfig.put("apiKey","[YOUR_API_KEY]");
 sdkConfig.put("apiSecret","[YOUR_API_SECRET]");
 
+// set OST_KYC_SDK_DEBUG=true for the debbuging purpose of sdk
 
 // The config field is optional for sdkConfig Object
 HashMap <String,Object> nestedparam = new HashMap<String,Object>();
