@@ -95,8 +95,9 @@ public class UserTest extends ServiceTestBase {
     public void create() throws Exception{
 
         HashMap<String, Object> params = getParams();
+        String version = System.getProperty("java.version");
         // make unique email using timestamp
-        params.put("email", "kyctest+" + (System.currentTimeMillis() / 1000) + "@ost.com");
+        params.put("email", "kyctest+" + (System.currentTimeMillis() / 1000) +"_"+ version + "@ost.com");
 
         // Test-Case: Create a new User.
         JsonObject response;
