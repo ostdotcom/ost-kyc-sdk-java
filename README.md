@@ -63,8 +63,8 @@ sdkConfig.put("apiSecret","[YOUR_API_SECRET]");
 
 // The config field is optional for sdkConfig Object
 HashMap <String,Object> nestedparam = new HashMap<String,Object>();
-// This is the timeout in seconds for which the socket connection will remain open
-// The value of timeout will always be of type long
+// This is the timeout in seconds for which the socket connection will remain open.
+// The value of timeout will always be of type long.
 nestedparam.put("timeout", (long) 15);
 sdkConfig.put("config", nestedparam);
 
