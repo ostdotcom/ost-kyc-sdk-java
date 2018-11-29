@@ -317,9 +317,7 @@ public class OSTKYCRequestClient {
 
     private static ArrayList<HttpParam> buildNestedQuery(ArrayList<HttpParam> params, String paramKeyPrefix, Object paramValObj) {
 
-        if (paramValObj instanceof String) {
-            params.add(new HttpParam(paramKeyPrefix, paramValObj.toString()));
-        } else if (paramValObj instanceof Map) {
+        if (paramValObj instanceof Map) {
 
             //            sort map.
             Map<String, Object> sortedMap = new TreeMap<String, Object>((Map<? extends String, ?>) paramValObj);
@@ -345,6 +343,13 @@ public class OSTKYCRequestClient {
                 String prefix = paramKeyPrefix + "[]";
                 params = buildNestedQuery(params, prefix, value);
             }
+        } else {
+            if(paramValObj != null){
+                params.add(new HttpParam(paramKeyPrefix, paramValObj.toString()));
+            }else{
+                params.add(new HttpParam(paramKeyPrefix, ""));
+            }
+
         }
         return params;
     }
