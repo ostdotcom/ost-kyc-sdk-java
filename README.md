@@ -21,7 +21,7 @@ To use this node module, developers will need to:
 #### Add this dependency to your project's POM:
 ```xml
 <dependency>
-<groupId>com.ost.kyc</groupId>
+<groupId>com.ost</groupId>
 <artifactId>ost-kyc-sdk-java</artifactId>
 <version>2.0.0</version>
 </dependency>
