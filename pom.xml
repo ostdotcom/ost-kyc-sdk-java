@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.ost.kyc</groupId>
+    <groupId>com.ost</groupId>
     <artifactId>ost-kyc-sdk-java</artifactId>
     <version>2.0.0-SNAPSHOT</version>
     <name>OST KYC SDK for Java</name>
@@ -125,7 +125,7 @@
         <developer>
             <id>ostdev</id>
             <organization>OST.COM</organization>
-            <organizationUrl>https://ost.com/</organizationUrl>
+            <organizationUrl>https://kyc.ost.com/</organizationUrl>
             <roles>
                 <role>developer</role>
             </roles>
@@ -136,7 +136,7 @@
         <developerConnection>scm:git:git@github.com:OpenSTFoundation/ost-kyc-sdk-java.git</developerConnection>
         <url>https://github.com/OpenSTFoundation/ost-kyc-sdk-java</url>
       <tag>HEAD</tag>
-  </scm>
+    </scm>
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
