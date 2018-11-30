@@ -1,7 +1,9 @@
 package com.ost.kyc.services.v2;
 
 import com.google.gson.JsonObject;
+import com.ost.kyc.services.OSTKYCAPIService;
 import com.ost.kyc.services.ServiceTestBase;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -104,6 +106,37 @@ public class UserTest extends ServiceTestBase {
         response = getService().create(params);
         validateResponseWithSuccess(response);
 
+    }
+
+
+    @Test
+    public void get_with_id_zero() throws Exception{
+
+        HashMap<String, Object> params = getParams();
+        params.put("id", "0");
+
+        // Test-Case: Get an existing User with id = 0.
+        JsonObject response;
+        response = getService().get(params);
+        validateResponseWithFaliure(response);
+
+    }
+
+    @Test
+    public void get_with_id_null() throws Exception{
+
+        HashMap<String, Object> params = getParams();
+        params.put("id", "");
+
+        // Test-Case: Get an existing User with id = 0.
+        JsonObject response;
+        try{
+            response = getService().get(params);
+        } catch (OSTKYCAPIService.InvalidParameter I)
+        {
+            System.out.println("I : "+I);
+            Assert.assertEquals( I.toString(), "com.ost.kyc.services.OSTKYCAPIService$InvalidParameter: id is invalid");
+        }
     }
 
     @Test
