@@ -66,6 +66,18 @@ public abstract class ServiceTestBase {
 
     }
 
+    protected String getErrorCode(JsonObject response) {
+        JsonObject responseErr = (JsonObject) response.get("err");
+        return responseErr.get("code").getAsString();
+    }
+
+    protected void isUnProcessableEntity(JsonObject response) {
+        if (response.get("success").toString().equals("false")) {
+            String errCode = getErrorCode(response);
+            Assert.assertEquals( errCode, new String("UNPROCESSABLE_ENTITY"));
+        }
+    }
+
     @After
     public void tearDown() throws Exception {
         OSTKYCSDK = null;
