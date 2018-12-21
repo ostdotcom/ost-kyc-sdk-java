@@ -27,6 +27,31 @@ public class UsersKyc extends OSTKYCAPIService {
      * @param params Request Params
      * @return API Response
      */
+    public JsonObject email_approve(Map<String,Object> params) throws MissingParameter, IOException, InvalidParameter {
+        String resource = this.urlPrefix + "/" + this.getUserId( params ) + "/email/approve";
+        return this.request.post(resource, params);
+    }
+    /**
+     * @param params Request Params
+     * @return API Response
+     */
+    public JsonObject email_deny(Map<String,Object> params) throws MissingParameter, IOException, InvalidParameter {
+        String resource = this.urlPrefix + "/" + this.getUserId( params ) + "/email/deny";
+        return this.request.post(resource, params);
+    }
+    /**
+     * @param params Request Params
+     * @return API Response
+     */
+    public JsonObject email_report_issue(Map<String,Object> params) throws MissingParameter, IOException, InvalidParameter {
+        String resource = this.urlPrefix + "/" + this.getUserId( params ) + "/email/report-issue";
+        return this.request.post(resource, params);
+    }
+
+    /**
+     * @param params Request Params
+     * @return API Response
+     */
     public JsonObject get(Map<String,Object> params) throws MissingParameter, IOException, InvalidParameter {
         String resource = this.urlPrefix + "/" + this.getUserId( params );
         return this.request.get(resource, params);

@@ -23,7 +23,7 @@ To use this node module, developers will need to:
 <dependency>
 <groupId>com.ost</groupId>
 <artifactId>ost-kyc-sdk-java</artifactId>
-<version>2.0.0</version>
+<version>2.0.1</version>
 </dependency>
 ```
 
@@ -140,6 +140,33 @@ params.put("nationality", "INDIAN");
 params.put("state", "maharashtra");
 params.put("postal_code", "411028");
 JsonObject response = usersKycService.submit_kyc( params );
+System.out.println("response: " + response.toString() );
+```
+
+Send Approve Email to User:
+
+```java
+HashMap <String, Object> params = new HashMap<String, Object>();
+params.put("user_id", "11550");
+JsonObject response = usersKycService.email_approve( params );
+System.out.println("response: " + response.toString() );
+```
+
+Send Deny Email to User:
+
+```java
+HashMap <String, Object> params = new HashMap<String, Object>();
+params.put("user_id", "11550");
+JsonObject response = usersKycService.email_deny( params );
+System.out.println("response: " + response.toString() );
+```
+
+Send Report Issue Email to User:
+
+```java
+HashMap <String, Object> params = new HashMap<String, Object>();
+params.put("user_id", "11550");
+JsonObject response = usersKycService.email_report_issue( params );
 System.out.println("response: " + response.toString() );
 ```
 
