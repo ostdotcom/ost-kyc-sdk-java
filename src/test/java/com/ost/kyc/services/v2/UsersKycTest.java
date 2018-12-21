@@ -98,7 +98,7 @@ public class UsersKycTest extends ServiceTestBase {
     public void get() throws Exception {
         HashMap<String, Object> params = new HashMap<String, Object>();
         String user_id = System.getenv("USER_ID");
-        params.put("user_id", user_id);
+        params.put("user_id", Integer.parseInt(user_id));
 
         // Test-Case: Get an existing UserKyc.
         JsonObject response;

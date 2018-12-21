@@ -1,3 +1,8 @@
+[OST KYC JAVA SDK v2.0.2](https://github.com/OpenSTFoundation/ost-kyc-sdk-java/tree/v2.0.2) December 21 2018
+---
+
+* Fix to allow number values for id and user_id in the parameters.
+
 [OST KYC JAVA SDK v2.0.1](https://github.com/OpenSTFoundation/ost-kyc-sdk-java/tree/v2.0.1) December 17 2018
 ---
 
