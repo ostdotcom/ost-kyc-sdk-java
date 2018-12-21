@@ -23,7 +23,7 @@ To use this node module, developers will need to:
 <dependency>
 <groupId>com.ost</groupId>
 <artifactId>ost-kyc-sdk-java</artifactId>
-<version>2.0.1</version>
+<version>2.0.2</version>
 </dependency>
 ```
 
@@ -69,8 +69,8 @@ nestedparam.put("timeout", (long) 15);
 sdkConfig.put("config", nestedparam);
 
 
-OSTSDK ostObj = new OSTSDK(sdkConfig);
-services = (Manifest) ostObj.services;
+OSTKYCSDK ostObj = new OSTKYCSDK(sdkConfig);
+com.ost.kyc.services.v2.Manifest services = (com.ost.kyc.services.v2.Manifest) ostObj.services;
 ```
 
 ### Users Module
