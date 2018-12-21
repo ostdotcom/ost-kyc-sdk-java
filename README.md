@@ -69,8 +69,8 @@ nestedparam.put("timeout", (long) 15);
 sdkConfig.put("config", nestedparam);
 
 
-OSTSDK ostObj = new OSTSDK(sdkConfig);
-services = (Manifest) ostObj.services;
+OSTKYCSDK ostObj = new OSTKYCSDK(sdkConfig);
+com.ost.kyc.services.v2.Manifest services = (com.ost.kyc.services.v2.Manifest) ostObj.services;
 ```
 
 ### Users Module
