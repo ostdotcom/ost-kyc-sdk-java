@@ -59,6 +59,42 @@ public class UsersKycTest extends ServiceTestBase {
     }
 
     @Test
+    public void email_approve() throws Exception {
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        String user_id = System.getenv("USER_ID");
+        params.put("user_id", user_id);
+
+        // Test-Case: Check Send Approve Email to User.
+        JsonObject response;
+        response = getService().email_approve(params);
+        isUnProcessableEntity(response);
+    }
+
+    @Test
+    public void email_deny() throws Exception {
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        String user_id = System.getenv("USER_ID");
+        params.put("user_id", user_id);
+
+        // Test-Case: Check Send Deny Email to User.
+        JsonObject response;
+        response = getService().email_deny(params);
+        isUnProcessableEntity(response);
+    }
+
+    @Test
+    public void email_report_issue() throws Exception {
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        String user_id = System.getenv("USER_ID");
+        params.put("user_id", user_id);
+
+        // Test-Case: Check Send Email Report Issue Email to User.
+        JsonObject response;
+        response = getService().email_report_issue(params);
+        isUnProcessableEntity(response);
+    }
+
+    @Test
     public void get() throws Exception {
         HashMap<String, Object> params = new HashMap<String, Object>();
         String user_id = System.getenv("USER_ID");
