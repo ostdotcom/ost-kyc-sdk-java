@@ -2,8 +2,7 @@
 The official [OST KYC JAVA SDK](https://dev.ost.com/docs/kyc/index.html).
 
 
-[![Travis](https://travis-ci.org/OpenSTFoundation/ost-kyc-sdk-java.svg?branch=master)](https://travis-ci.org/OpenSTFoundation/ost-kyc-sdk-java)
-[![Gitter: JOIN CHAT](https://img.shields.io/badge/gitter-JOIN%20CHAT-brightgreen.svg)](https://gitter.im/OpenSTFoundation/SimpleToken)
+[![Travis](https://travis-ci.org/ostdotcom/ost-kyc-sdk-java.svg?branch=master)](https://travis-ci.org/ostdotcom/ost-kyc-sdk-java)
 
 ## Requirements
 
@@ -23,7 +22,7 @@ To use this node module, developers will need to:
 <dependency>
 <groupId>com.ost</groupId>
 <artifactId>ost-kyc-sdk-java</artifactId>
-<version>2.0.0</version>
+<version>2.0.2</version>
 </dependency>
 ```
 
@@ -31,7 +30,7 @@ To use this node module, developers will need to:
 
 Clone the repository
 ```bash
-git clone https://github.com/OpenSTFoundation/ost-kyc-sdk-java.git
+git clone https://github.com/ostdotcom/ost-kyc-sdk-java.git
 cd ost-kyc-sdk-java
 ```
 
@@ -69,8 +68,8 @@ nestedparam.put("timeout", (long) 15);
 sdkConfig.put("config", nestedparam);
 
 
-OSTSDK ostObj = new OSTSDK(sdkConfig);
-services = (Manifest) ostObj.services;
+OSTKYCSDK ostObj = new OSTKYCSDK(sdkConfig);
+com.ost.kyc.services.v2.Manifest services = (com.ost.kyc.services.v2.Manifest) ostObj.services;
 ```
 
 ### Users Module
@@ -140,6 +139,33 @@ params.put("nationality", "INDIAN");
 params.put("state", "maharashtra");
 params.put("postal_code", "411028");
 JsonObject response = usersKycService.submit_kyc( params );
+System.out.println("response: " + response.toString() );
+```
+
+Send Approve Email to User:
+
+```java
+HashMap <String, Object> params = new HashMap<String, Object>();
+params.put("user_id", "11550");
+JsonObject response = usersKycService.email_approve( params );
+System.out.println("response: " + response.toString() );
+```
+
+Send Deny Email to User:
+
+```java
+HashMap <String, Object> params = new HashMap<String, Object>();
+params.put("user_id", "11550");
+JsonObject response = usersKycService.email_deny( params );
+System.out.println("response: " + response.toString() );
+```
+
+Send Report Issue Email to User:
+
+```java
+HashMap <String, Object> params = new HashMap<String, Object>();
+params.put("user_id", "11550");
+JsonObject response = usersKycService.email_report_issue( params );
 System.out.println("response: " + response.toString() );
 ```
 

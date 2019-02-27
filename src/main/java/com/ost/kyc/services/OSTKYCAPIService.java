@@ -51,8 +51,14 @@ public abstract class OSTKYCAPIService {
     }
 
     public Boolean isValidParameter(Object params) throws InvalidParameter {
-        Pattern p = Pattern.compile("[0-9a-zA-Z.-]+");
-        return p.matcher((String) params).matches();
+        if(params instanceof Number){
+            return true;
+        }else if(params instanceof String){
+            Pattern p = Pattern.compile("[0-9a-zA-Z.-]+");
+            return p.matcher((String) params).matches();
+        }else{
+            return false;
+        }
     }
 
     public class MissingParameter extends Exception {

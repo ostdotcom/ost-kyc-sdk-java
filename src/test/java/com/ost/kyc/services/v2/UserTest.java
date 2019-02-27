@@ -84,7 +84,7 @@ public class UserTest extends ServiceTestBase {
 
         HashMap<String, Object> params = getParams();
         String user_id = System.getenv("USER_ID");
-        params.put("id", user_id);
+        params.put("id", Integer.parseInt(user_id));
 
         // Test-Case: Get an existing User.
         JsonObject response;
