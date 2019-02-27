@@ -2,8 +2,7 @@
 The official [OST KYC JAVA SDK](https://dev.ost.com/docs/kyc/index.html).
 
 
-[![Travis](https://travis-ci.org/OpenSTFoundation/ost-kyc-sdk-java.svg?branch=master)](https://travis-ci.org/OpenSTFoundation/ost-kyc-sdk-java)
-[![Gitter: JOIN CHAT](https://img.shields.io/badge/gitter-JOIN%20CHAT-brightgreen.svg)](https://gitter.im/OpenSTFoundation/SimpleToken)
+[![Travis](https://travis-ci.org/ostdotcom/ost-kyc-sdk-java.svg?branch=master)](https://travis-ci.org/ostdotcom/ost-kyc-sdk-java)
 
 ## Requirements
 
@@ -31,7 +30,7 @@ To use this node module, developers will need to:
 
 Clone the repository
 ```bash
-git clone https://github.com/OpenSTFoundation/ost-kyc-sdk-java.git
+git clone https://github.com/ostdotcom/ost-kyc-sdk-java.git
 cd ost-kyc-sdk-java
 ```
 
