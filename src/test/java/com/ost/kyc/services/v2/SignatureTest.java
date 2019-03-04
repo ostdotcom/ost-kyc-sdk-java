@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class SignatureTest extends ServiceTestBase {
 
@@ -54,7 +56,6 @@ public class SignatureTest extends ServiceTestBase {
         nestedparams.put("b" , hashWithKeyValue2);
         nestedparams.put("c" , hashWithKeyValue3);
 
-
         params.put("aaaaa", nestedparams);
         params.put("arrayValues", array);
         params.put("garbage_str", "~!@#$%^&*()_+-= {}[]:\";'?/<>,. this is garbage");
@@ -67,12 +68,9 @@ public class SignatureTest extends ServiceTestBase {
     public void testSignature() throws Exception {
 
         HashMap<String, Object> params = getParams();
-        String apiKey = System.getenv("OST_KYC_API_KEY");
-        String apiSecret = System.getenv("OST_KYC_API_SECRET");
-        String apiEndpoint = System.getenv("OST_KYC_API_ENDPOINT");
-        System.out.println("The apiKey is : "+apiKey);
-        System.out.println("The apiSecret is : "+apiSecret);
-        System.out.println("The apiEndPoint is : "+apiEndpoint);
+        String apiKey = "d437535591587e8df4dd30b771651ebb";
+        String apiSecret = "a0431203671f42c079b2154066fd04ba";
+        String apiEndpoint = "https://kyc.ost.com";
 
         params.put("apiSecret",apiSecret);
         params.put("apiKey",apiKey);
@@ -81,14 +79,32 @@ public class SignatureTest extends ServiceTestBase {
         // Test-Case: Test Signature.
         String signature;
         OSTKYCRequestClient obj = new OSTKYCRequestClient(params);
-        signature = obj.getSignature("/api/v2/users", params);
+        signature = getSignature("/api/v2/users", params, obj);
         boolean success;
-        if (signature.equalsIgnoreCase("9114b899d656e687b1c69acb6b7d99fb4817df590328e7149109fab11e69eea2")) {
+        if (signature.equalsIgnoreCase("ca84293b5b901a8c9972b873a224ce05db28d36471bedf613ae451a5a80b8f99")) {
             success = true;
         } else {
             success = false;
         }
-        System.out.println("The signature is : "+signature);
         Assert.assertEquals( success, true);
+    }
+
+    public String getSignature(String resource, Map<String, Object> paramValObj, OSTKYCRequestClient obj) {
+        ArrayList<OSTKYCRequestClient.HttpParam> paramsArray = (ArrayList<OSTKYCRequestClient.HttpParam>) obj.getRequestParam(resource,paramValObj);
+        String paramKey;
+        String paramVal;
+        Iterator it = paramsArray.iterator();
+        while (it.hasNext()) {
+            OSTKYCRequestClient.HttpParam pair = (OSTKYCRequestClient.HttpParam) it.next();
+
+            paramKey = pair.getParamName();
+            paramVal = pair.getParamValue();
+
+            if(paramKey.equalsIgnoreCase("signature"))
+            {
+                return paramVal;
+            }
+        }
+        return "";
     }
 }

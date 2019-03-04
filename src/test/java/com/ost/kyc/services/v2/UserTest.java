@@ -87,7 +87,6 @@ public class UserTest extends ServiceTestBase {
             response = getService().get(params);
         } catch (OSTKYCAPIService.InvalidParameter I)
         {
-            System.out.println("I : "+I);
             Assert.assertEquals( I.toString(), "com.ost.kyc.services.OSTKYCAPIService$InvalidParameter: id is invalid");
         }
     }

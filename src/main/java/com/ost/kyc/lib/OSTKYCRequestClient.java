@@ -32,7 +32,7 @@ public class OSTKYCRequestClient {
     private static Boolean DEBUG = ("true").equalsIgnoreCase( System.getenv("OST_KYC_SDK_DEBUG") );
     private static Boolean VERBOSE = false;
 
-    static class HttpParam {
+    public static class HttpParam {
         private String paramName;
         private String paramValue;
 
@@ -208,32 +208,12 @@ public class OSTKYCRequestClient {
             responseBody = getResponseBodyAsString(response);
         }catch (SocketTimeoutException e)
         {
-            System.out.println("SocketTimeoutException occured");
             responseBody =  SocketTimeoutExceptionString;
         }
         return buildApiResponse(responseBody);
     }
 
-    public String getSignature(String resource, Map<String, Object> paramValObj) {
-        ArrayList<HttpParam> paramsArray = getRequestParam(resource,paramValObj);
-        String paramKey;
-        String paramVal;
-        Iterator it = paramsArray.iterator();
-        while (it.hasNext()) {
-            HttpParam pair = (HttpParam) it.next();
-
-            paramKey = pair.getParamName();
-            paramVal = pair.getParamValue();
-
-            if(paramKey.equalsIgnoreCase("signature"))
-            {
-                return paramVal;
-            }
-        }
-        return "";
-    }
-
-    private ArrayList<HttpParam> getRequestParam(String resource, Map<String, Object> paramValObj) {
+    public ArrayList<HttpParam> getRequestParam(String resource, Map<String, Object> paramValObj) {
 
         // Start Building HMAC Input Buffer by parsing the url.
         Buffer hmacInputBuffer = new Buffer();
