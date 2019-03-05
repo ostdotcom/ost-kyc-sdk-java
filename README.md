@@ -22,7 +22,7 @@ To use this node module, developers will need to:
 <dependency>
 <groupId>com.ost</groupId>
 <artifactId>ost-kyc-sdk-java</artifactId>
-<version>2.0.3</version>
+<version>2.0.4</version>
 </dependency>
 ```
 
