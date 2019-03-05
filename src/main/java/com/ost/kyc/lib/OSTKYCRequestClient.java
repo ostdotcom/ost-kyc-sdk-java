@@ -32,7 +32,7 @@ public class OSTKYCRequestClient {
     private static Boolean DEBUG = ("true").equalsIgnoreCase( System.getenv("OST_KYC_SDK_DEBUG") );
     private static Boolean VERBOSE = false;
 
-    static class HttpParam {
+    public static class HttpParam {
         private String paramName;
         private String paramValue;
 
@@ -141,69 +141,40 @@ public class OSTKYCRequestClient {
 
         FormBody.Builder formBodyBuilder = new FormBody.Builder();
         if (null == urlBuilder) {
-            throw new IOException("Failed to instanciate HttpUrl.Builder. resource or Api Endpoint is incorrect.");
+            throw new IOException("Failed to instantiate HttpUrl.Builder. resource or Api Endpoint is incorrect.");
         }
 
         // Evaluate the url generated so far.
         HttpUrl url = urlBuilder.build();
 
-        // Start Building HMAC Input Buffer by parsing the url.
-        Buffer hmacInputBuffer = new Buffer();
-//        for (String path : url.pathSegments()) {
-//            if (DEBUG && VERBOSE) System.out.println("path:" + path);
-//            hmacInputBuffer.writeByte('/').writeUtf8(PathSegmentEscaper.escape(path));
-//        }
-
-        hmacInputBuffer.writeUtf8(resource);
-        hmacInputBuffer.writeByte('?');
-
         //Reset urlBuilder.
         urlBuilder = baseUrl.newBuilder();
 
+
+        ArrayList<HttpParam> params = new ArrayList<HttpParam>();
+
         mapParams.put("api_key", apiKey);
         mapParams.put("request_timestamp", String.valueOf(System.currentTimeMillis() / 1000));
-        ArrayList<HttpParam> params = new ArrayList<HttpParam>();
+
+        params = getRequestParam(resource, mapParams);
+
         String paramKey;
         String paramVal;
 
-        params = buildNestedQuery(params, "", mapParams);
-
         // Add params to url/form-body & hmacInputBuffer.
         Iterator it = params.iterator();
-        boolean firstParam = true;
+
         while (it.hasNext()) {
             HttpParam pair = (HttpParam) it.next();
 
             paramKey = pair.getParamName();
             paramVal = pair.getParamValue();
 
-            paramKey = specialCharacterEscape(paramKey);
-            paramVal = specialCharacterEscape(paramVal);
-
-            if (!firstParam) {
-                hmacInputBuffer.writeByte('&');
-            }
-            firstParam = false;
-
-            hmacInputBuffer.writeUtf8(paramKey);
-            hmacInputBuffer.writeByte('=');
-            hmacInputBuffer.writeUtf8(paramVal);
-            if (DEBUG) System.out.println("paramKey " + paramKey + " paramVal " + paramVal);
-
             if (GET_REQUEST.equalsIgnoreCase(requestType)) {
                 urlBuilder.addEncodedQueryParameter(paramKey, paramVal);
             } else {
                 formBodyBuilder.addEncoded(paramKey, paramVal);
             }
-        }
-
-        // Add signature to Params.
-        paramKey = "signature";
-        paramVal = signQueryParams(hmacInputBuffer);
-        if (GET_REQUEST.equalsIgnoreCase(requestType)) {
-            urlBuilder.addEncodedQueryParameter(paramKey, paramVal);
-        } else {
-            formBodyBuilder.addEncoded(paramKey, paramVal);
         }
 
         // Build the url.
@@ -237,12 +208,57 @@ public class OSTKYCRequestClient {
             responseBody = getResponseBodyAsString(response);
         }catch (SocketTimeoutException e)
         {
-            System.out.println("SocketTimeoutException occured");
             responseBody =  SocketTimeoutExceptionString;
         }
         return buildApiResponse(responseBody);
     }
 
+    public ArrayList<HttpParam> getRequestParam(String resource, Map<String, Object> paramValObj) {
+
+        // Start Building HMAC Input Buffer by parsing the url.
+        Buffer hmacInputBuffer = new Buffer();
+
+        hmacInputBuffer.writeUtf8(resource);
+        hmacInputBuffer.writeByte('?');
+
+
+        ArrayList<HttpParam> params = new ArrayList<HttpParam>();
+        ArrayList<HttpParam> escapedParams = new ArrayList<HttpParam>();
+        String paramKey;
+        String paramVal;
+
+        params = buildNestedQuery(params, "", paramValObj);
+
+        // Add params to url/form-body & hmacInputBuffer.
+        Iterator it = params.iterator();
+        boolean firstParam = true;
+
+        while (it.hasNext()) {
+            HttpParam pair = (HttpParam) it.next();
+
+            paramKey = pair.getParamName();
+            paramVal = pair.getParamValue();
+
+            paramKey = specialCharacterEscape(paramKey);
+            paramVal = specialCharacterEscape(paramVal);
+
+            if (!firstParam) {
+                hmacInputBuffer.writeByte('&');
+            }
+            firstParam = false;
+
+            hmacInputBuffer.writeUtf8(paramKey);
+            hmacInputBuffer.writeByte('=');
+            hmacInputBuffer.writeUtf8(paramVal);
+
+            escapedParams.add(new HttpParam(paramKey, paramVal));
+            if (DEBUG) System.out.println("paramKey " + paramKey + " paramVal " + paramVal);
+        }
+
+        paramVal = signQueryParams(hmacInputBuffer);
+        escapedParams.add(new HttpParam("signature", paramVal));
+        return escapedParams;
+    }
 
     private String signQueryParams(Buffer hmacInputBuffer) {
         // Generate Signature for Params.
@@ -356,7 +372,7 @@ public class OSTKYCRequestClient {
 
     private static String specialCharacterEscape(String stringToEscape){
         stringToEscape = FormParameterEscaper.escape(stringToEscape);
-        stringToEscape = stringToEscape.replace("*", "%26");
+        stringToEscape = stringToEscape.replace("*", "%2A");
         return stringToEscape;
     }
 }

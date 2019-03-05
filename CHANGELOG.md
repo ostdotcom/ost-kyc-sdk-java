@@ -1,3 +1,8 @@
+[OST KYC JAVA SDK v2.0.4](https://github.com/ostdotcom/ost-kyc-sdk-java/tree/v2.0.4) March 04 2019
+---
+
+* Fix for escaping special character from parameters and added test case for signature matching.
+
 [OST KYC JAVA SDK v2.0.3](https://github.com/ostdotcom/ost-kyc-sdk-java/tree/v2.0.3) February 28 2019
 ---
 

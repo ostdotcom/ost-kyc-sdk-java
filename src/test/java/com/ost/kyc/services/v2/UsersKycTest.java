@@ -141,7 +141,7 @@ public class UsersKycTest extends ServiceTestBase {
 
         // Test-Case: Get Presigned URL for PUT call.
         JsonObject response;
-        response = getService().get_presigned_url_post(params);
+        response = getService().get_presigned_url_put(params);
         validateResponseWithSuccess(response);
 
     }
